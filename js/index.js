@@ -14,7 +14,12 @@ const reposList = document.querySelector('#repos-list')
 input.addEventListener('submit', e => {
     e.preventDefault();
     const searchItem = input.elements['search'].value;
-    fetch(`${userSearchEndpoint}${searchItem}`)
+    fetch(`${userSearchEndpoint}${searchItem}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+        }
+    })
         .then(r => r.json())
         .then(items => displayItems(items, searchItem))
 })
@@ -38,7 +43,12 @@ function displayItems(jsonData, searchItem) {
         imgElement.width = 50;
         imgElement.height = 50;
         linkElement.addEventListener('click', () => {
-            fetch(`${mainEndpoint}/${userName}/repos`)
+            fetch(`${mainEndpoint}/${userName}/repos`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            })
                 .then(r => r.json())
                 .then(repositories => {
                     reposList.innerHTML = '';
